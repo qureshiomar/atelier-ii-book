@@ -1,11 +1,3 @@
-/*
- * Creation & Computation - Digital Futures, OCAD University
- * Kate Hartman / Nick Puckett
- * 
- * remote controller that sends a variable to all the listening devices
- * phone only
- */
-
 // server variables
 
 var dataServer;
