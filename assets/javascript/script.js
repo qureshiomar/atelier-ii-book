@@ -75,23 +75,3 @@ function mouseDragged(){
     
     
 }
-function deviceTurned() {
-    
-    
-    slideNumber = ((slideNumber+1)<=(totalImages-1)) ? slideNumber+=1 : 0; //shorthand for conditional assignment
-
-
-            //console.log(slideNumber);
-
-            //publish the number to everyone.
-            dataServer.publish(
-            {
-                channel: channelName,
-                message: 
-                {
-                slide: slideNumber,
-                    x: ,
-                    y
-                }
-            });
-}
