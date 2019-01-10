@@ -50,7 +50,7 @@ function draw()
 
     for (var i=0; i < images.length; i++){
         
-        images[i]x = imagePositions[i].x;
+        images[i].x = imagePositions[i].x;
         
         image(images[i], imagePositions[i].x, imagePositions[i].y);
     }
