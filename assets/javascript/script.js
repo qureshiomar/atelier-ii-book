@@ -28,7 +28,7 @@ function setup()
       
   });
     
-    images[0] = loadImage("https://www.freelogodesign.org/Content/img/logo-ex-7.png"); 
+    images[0] = loadImage("https://angular.io/assets/images/logos/angular/angular.png"); 
     images[0] = loadImage("https://techcrunch.com/wp-content/uploads/2018/07/logo-2.png?w=300"); 
     images[0] = loadImage("https://brandmark.io/logo-rank/random/beats.png"); 
     
