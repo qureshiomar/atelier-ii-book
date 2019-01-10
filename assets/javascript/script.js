@@ -18,7 +18,8 @@ var subKey = 'sub-c-8789e4ac-135a-11e9-b4a6-026d6924b094';
 var channelName = "book";
 
 var images = [];
-var currentlyDraggedImg = {};
+var currentlyDraggedImg = 0;
+var imagePositions = [];
 
 function setup() 
 {
@@ -37,17 +38,26 @@ function setup()
   });
     
     images[0] = loadImage("https://angular.io/assets/images/logos/angular/angular.png"); 
-    images[0] = loadImage("https://techcrunch.com/wp-content/uploads/2018/07/logo-2.png?w=300"); 
-    images[0] = loadImage("https://brandmark.io/logo-rank/random/beats.png"); 
+    images[1] = loadImage("https://99designs-start-attachments.imgix.net/alchemy-pictures/2016%2F02%2F22%2F04%2F07%2F21%2F9757e437-5ec1-4378-804f-ca0f9567c110%2F380048_Widakk.png?auto=format&ch=Width%2CDPR&w=250&h=250"); 
+    images[2] = loadImage("https://99designs-start-attachments.imgix.net/alchemy-pictures/2016%2F02%2F22%2F04%2F24%2F31%2Fb7bd820a-ecc0-4170-8f4e-3db2e73b0f4a%2F550250_artsigma.png?auto=format&ch=Width%2CDPR&w=250&h=250"); 
     
     background(255);
     noStroke();
     
+    for (var i=0; i < 3; i++){
+        
+        imagePositions[i] = {
+            x: 0,
+            y:0
+        }
+    }
 }
 
 function draw() 
 {
 
+    background(255);
+    
     for (var i=0; i < images.length; i++){
         
         images[i].x = imagePositions[i].x;
@@ -61,10 +71,12 @@ function mousePressed(){
     
     for (var i=0; i < images.length; i++){
         
-        if (dist(mouseX, mouseY, images[i].x, images[i].y) < 10) {
+        if (dist(mouseX, mouseY, imagePositions[i].x + 250/2, imagePositions[i].y + 250/2) < 40) {
+            
             
             currentlyDraggedImg = i;
             
+          
         }
             
     }
@@ -72,34 +84,20 @@ function mousePressed(){
 
 function mouseDragged(){
     
+        console.log(currentlyDraggedImg);
     
        if (currentlyDraggedImg != null) {
            
-           imagePositions[currentlyDraggedImg].x = mouseX;
-           imagePositions[currentlyDraggedImg].y = mouseY; 
+           imagePositions[currentlyDraggedImg].x = mouseX - 250/2;
+           imagePositions[currentlyDraggedImg].y = mouseY - 250/2; 
            
        }
             
     
     
 }
-function deviceTurned() {
+
+function mouseReleased(){
     
-    
-    slideNumber = ((slideNumber+1)<=(totalImages-1)) ? slideNumber+=1 : 0; //shorthand for conditional assignment
-
-
-            //console.log(slideNumber);
-
-            //publish the number to everyone.
-            dataServer.publish(
-            {
-                channel: channelName,
-                message: 
-                {
-                slide: slideNumber,
-                    x: ,
-                    y
-                }
-            });
+    currentlyDraggedImg = null;
 }
