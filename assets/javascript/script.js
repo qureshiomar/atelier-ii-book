@@ -21,36 +21,14 @@ for (var i; i < 10; i ++){
 
 */
 var currentRoundNumber = 0;
-var numberOfPlayers = 3;
+var numberOfPlayers = 2;
 var currentQuestionIndex = 0;
 var numberOfRecievedAnswers = 0;
-var thisPlayersIndex = 0;
+var thisPlayersIndex = null;
 
 //BOOLEAN TO ENSURE ONLY ANSWER PER PLAYER
 var alreadyAnswered = 0;
-/*
-var allPlayers = [
-    
-    {
-        playerIndex: 0,
-        name: "Shiloh",
-        score: 0
-    },
-    {
-        playerIndex: 1,
-        name: "Tyra",
-        score: 0
-    },
-    {
-        playerIndex: 2,
-        name: "Omar",
-        score: 0
-        
-    }
 
-
-];
-*/
 var allPlayers = [];
 var allQuestions = [
     
@@ -123,6 +101,7 @@ function setup()
     //attach callbacks to the pubnub object to handle messages and connections
     dataServer.addListener({ message: readIncoming });
     dataServer.subscribe({channels: [channelName]});
+    //WE ALSO WANT TO SUBSCRIBE TO THE SETUP CHANNEL, USED FOR ADDING PLAYERS TO LOBBY
     dataServer.subscribe({channels: [setupChannelName]});
 
     
@@ -134,8 +113,6 @@ function setup()
     btn.mousePressed(requestJoinGame);
     
     setupAnswerButtons();
-    
-    
     
 }
 
@@ -174,44 +151,49 @@ function setupAnswerButtons(){
 }
 
 function draw() {
-
-    
+   
 }
 
 function readIncoming(inMessage){
+    
     console.log("GOT MESSAGE ON CHANNEL" + inMessage.channel);
     
     if (inMessage.channel == channelName){
-    
-        //ADD TO THE NUMBER OF ANSWERS
-        numberOfRecievedAnswers++;
         
-        
-        //CHECK IF THE THE RECIEVED ANSWER IS THE RIGHT ONE
-        if(inMessage.message.answerLetter == allQuestions[currentQuestionIndex].correctAnswer) {
+        //ONLY EXCEPT ANSWERS FROM REGISTARED PLAYERS
+        if (inMessage.message.playerIndex != null){
             
-            //DISPLAY CORRECT ON NEXT SCREEN
-            
-            //IF IT IS THEN ADD ONE TO THAT PLAYERS SCORE
-            allPlayers[inMessage.message.playerIndex].score += 1;
-            
-            console.log(allPlayers[inMessage.message.playerIndex].name + " guessed correctly!");
+            //ADD TO THE NUMBER OF ANSWERS
+            numberOfRecievedAnswers++;
 
-        } else {
-            
-            console.log(allPlayers[inMessage.message.playerIndex].name + " guessed wrong!");
+
+            //CHECK IF THE THE RECIEVED ANSWER IS THE RIGHT ONE
+            if(inMessage.message.answerLetter == allQuestions[currentQuestionIndex].correctAnswer) {
+
+                //DISPLAY CORRECT ON NEXT SCREEN
+
+                //IF IT IS THEN ADD ONE TO THAT PLAYERS SCORE
+                allPlayers[inMessage.message.playerIndex].score += 1;
+
+                console.log(allPlayers[inMessage.message.playerIndex].name + " guessed correctly!");
+
+            } else {
+
+                console.log(allPlayers[inMessage.message.playerIndex].name + " guessed wrong!");
+            }
+
+
+            //ONCE EVERYONE HAS ANSWERED
+            if (numberOfRecievedAnswers == numberOfPlayers) {
+
+                //LOAD NEW PAGE
+                //SCENE VARIABLE SWITCH
+                newRound();
+
+            } else {
+                alert("You have not joined a game yet!");
+            }
         }
-        
-        
-        //ONCE EVERYONE HAS ANSWERED
-        if (numberOfRecievedAnswers == numberOfPlayers) {
-        
-            //LOAD NEW PAGE
-            //SCENE VARIABLE SWITCH
-            newRound();
-            
-        }
-        
     //IF A MESSAGE IS RECIEVED FROM THE SETUP CHANNEL
     //RECIEVED ANYTIME SOMEONE WANTS TO JOIN A GAME
     } else if (inMessage.channel == setupChannelName) {
@@ -238,18 +220,21 @@ function readIncoming(inMessage){
                 score:0
             });
             
+            
+            
             //IF IT WAS THIS MACHINE THAT SENT THE REQUEST TO JOIN GAME
             if (inMessage.message.playerName == nameInput.value()){
                 
                 //CYCLE THROUGH ALL THE PLAYERS
                 for (var i = 0; i < allPlayers.length; i ++){
                     
-                    //FIND THIS PLAYER IN THE ARRAY OF ALL PLAYERS
+                    //FIND THIS PLAYER IN THE ARRAY OF ALL PLAYERS, BECAUSE YOU MAY NOT BE THE FIRST TO JOIN
                     if (allPlayers[i].name == inMessage.message.playerName){
                         //SET THIS PLAYERS INDEX TO BE THE RIGHT NUMBER
                         thisPlayersIndex = allPlayers[i].playerIndex;
                     }
                     
+                    //IF THIS PLAYER WAS THE LAST ONE TO JOIN, THEN WE ARE READY TO PLAY
                     if (allPlayers.length == numberOfPlayers){
                         
                         console.log("Everyone is ready, lets play!");
@@ -264,12 +249,14 @@ function readIncoming(inMessage){
             alert("A player with this name already exsists!");
         }
         
+    
     }
 }
 
-function requestJoinGame (name){
+//CALLED BY
+function requestJoinGame (){
     
-    
+    //WHEN THE PLAYER PRESSES THE JOIN BUTTON, SEND A REQUEST ON THE SETUP CHANNEL, PASSING THROUGH THE VALUE IN THE TEXT BOX
     dataServer.publish({
     
             channel: setupChannelName,
