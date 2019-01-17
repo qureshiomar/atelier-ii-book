@@ -21,13 +21,15 @@ for (var i; i < 10; i ++){
 
 */
 var currentRoundNumber = 0;
-var numberOfPlayers = 1;
+var numberOfPlayers = 3;
 var currentQuestionIndex = 0;
 var numberOfRecievedAnswers = 0;
 var thisPlayersIndex = null;
+var topPlayer, secondPlayer, thirdPlayer;
 
 //BOOLEAN TO ENSURE ONLY ANSWER PER PLAYER
 var alreadyAnswered = 0;
+
 
 var allPlayers = [];
 var allQuestions = [
@@ -176,12 +178,89 @@ function goToResultsScreen(correctOrIncorrect){
         createP("Correct!");
         //OMAR STYLING HERE
         
+        //var img = loadImage("assets/checkmarkicon.jpg");
+        
     } else {
         
         createP("Wrong!");
         //OMAR STYLING HERE
+        
+        //var img = loadImage("assets/crossicon.jpg");
     }
     
+    //image(img,0,0,0,0);
+    
+    var test = [
+        {
+            playerIndex: 0,
+            name: "Fred",
+            score:0
+        },
+        {
+            playerIndex: 1,
+            name: "Tom",
+            score:18
+        },
+        {
+            playerIndex: 2,
+            name: "Syndy",
+            score:25
+        },
+        {
+            playerIndex: 3,
+            name: "Paul",
+            score:12
+        }
+    ];
+    
+    var blank = {
+            playerIndex: 0,
+            name: "blank",
+            score:0
+    }
+   topPlayer = blank;
+    secondPlayer = blank;
+   thirdPlayer = blank;
+    
+    //FIND TOP PLAYER
+    for (var i =0; i < allPlayers.length; i++){
+        
+        if (allPlayers[i].score > topPlayer.score){
+            console.log("set 1 place");
+           topPlayer = allPlayers[i];
+        }
+    }
+    
+    //FIND SECOND PLAYER
+    for (var j =0; j < allPlayers.length; j++){
+        
+        if (allPlayers[j].score >= secondPlayer.score && allPlayers[j] != topPlayer){
+            
+            console.log("Setting 2");
+            secondPlayer = allPlayers[j];
+            
+        }
+         
+         
+    }
+    
+    //FIND THIRD PLAYER
+     for (var k =0; k < allPlayers.length; k++){
+       
+        if (allPlayers[k].score >= thirdPlayer.score && allPlayers[k] != topPlayer && allPlayers[k] != secondPlayer){
+            
+            console.log("Setting 3");
+           thirdPlayer = allPlayers[k];
+        }
+         
+    }
+    
+   
+   console.log(topPlayer); 
+     console.log(secondPlayer);
+     console.log(thirdPlayer);
+    
+    setTimeout(newRound,3000);
     
 }
 
@@ -206,6 +285,7 @@ function readIncoming(inMessage){
                 //IF IT IS THEN ADD ONE TO THAT PLAYERS SCORE
                 allPlayers[inMessage.message.playerIndex].score += 1;
                 
+                
                 correctOrIncorrect = true;
                 
                 console.log(allPlayers[inMessage.message.playerIndex].name + " guessed correctly!");
@@ -226,6 +306,7 @@ function readIncoming(inMessage){
                 
                 //MOVE TO NEW PAGE
                 goToResultsScreen(correctOrIncorrect);
+                
                 //newRound();
 
             } 
@@ -259,6 +340,9 @@ function readIncoming(inMessage){
                 name: inMessage.message.playerName,
                 score:0
             });
+            
+            
+            
             
             
             
@@ -311,6 +395,8 @@ function requestJoinGame (){
 
 //CALLED BY ___ ONCE A NEW QUESTION IS POSED
 function newRound(){
+    
+    
     
     console.log("New Round");
     
