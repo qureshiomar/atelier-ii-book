@@ -21,7 +21,7 @@ for (var i; i < 10; i ++){
 
 */
 var currentRoundNumber = 0;
-var numberOfPlayers = 2;
+var numberOfPlayers = 1;
 var currentQuestionIndex = 0;
 var numberOfRecievedAnswers = 0;
 var thisPlayersIndex = null;
@@ -189,8 +189,66 @@ function goToResultsScreen(correctOrIncorrect){
     
     //image(img,0,0,0,0);
     
+    var test = [
+        {
+            playerIndex: 0,
+            name: "Fred",
+            score:5
+        },
+        {
+            playerIndex: 1,
+            name: "Tom",
+            score:10
+        },
+        {
+            playerIndex: 2,
+            name: "Syndy",
+            score:3
+        },
+        {
+            playerIndex: 3,
+            name: "Paul",
+            score:2
+        }
+    ];
     
+    var topPlayer = test[0];
+    var secondPlayer = test[0];
+    var thirdPlayer = test[0];
     
+    //FIND TOP PLAYER
+    for (var i =0; i < test.length; i++){
+        
+        if (test[i].score > topPlayer.score){
+           topPlayer = test[i];
+        }
+    }
+    
+    //FIND SECOND PLAYER
+    for (var j =0; j < test.length; j++){
+        
+        if (test[j].score > secondPlayer.score && test[j] != topPlayer){
+            
+           secondPlayer = test[j];
+        }
+         
+         
+    }
+    
+    //FIND THIRD PLAYER
+     for (var k =0; k < test.length; k++){
+       
+        if (test[k].score > thirdPlayer.score && test[k] != topPlayer && test[k] != secondPlayer){
+             
+           thirdPlayer = test[k];
+        }
+         
+    }
+    
+   
+   console.log(topPlayer); 
+     console.log(secondPlayer);
+     console.log(thirdPlayer);
     
     setTimeout(newRound,3000);
     
