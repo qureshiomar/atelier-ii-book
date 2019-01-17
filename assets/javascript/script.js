@@ -21,7 +21,7 @@ for (var i; i < 10; i ++){
 
 */
 var currentRoundNumber = 0;
-var numberOfPlayers = 2;
+var numberOfPlayers = 1;
 var currentQuestionIndex = 0;
 var numberOfRecievedAnswers = 0;
 var thisPlayersIndex = null;
@@ -81,7 +81,7 @@ var setupChannelName = "kahootSetup"
 //GRAPHIC ELEMENTS
 var answerABtn, answerBBtn, answerCBtn , answerDBtn;
 var questionLabel;
-var nameInput;
+var nameInput, joinBtn;
 
 function setup() 
 {
@@ -109,8 +109,8 @@ function setup()
     noStroke();
     
     nameInput = createInput();
-    var btn = createButton("Join");
-    btn.mousePressed(requestJoinGame);
+    joinBtn = createButton("Join");
+    joinBtn.mousePressed(requestJoinGame);
     
     setupAnswerButtons();
     
@@ -134,6 +134,7 @@ function setupAnswerButtons(){
     answerABtn = createButton('A ' + allQuestions[currentQuestionIndex].answerA);
     answerABtn.style('width', "300px");
     answerABtn.style('height', "300px");
+    
     answerBBtn = createButton('B ' + allQuestions[currentQuestionIndex].answerB);
     answerBBtn.style('width', "300px");
     answerBBtn.style('height', "300px");
@@ -150,6 +151,21 @@ function setupAnswerButtons(){
     answerDBtn.mousePressed(chooseOptionD);
 }
 
+function goToResultsScreen(){
+    
+    
+    answerABtn.remove();
+    answerBBtn.remove();
+    answerCBtn.remove();
+    answerDBtn.remove();
+    
+    nameInput.remove();
+    joinBtn.remove();
+    questionLabel.remove();
+    
+    
+    
+}
 
 function readIncoming(inMessage){
     
@@ -185,7 +201,11 @@ function readIncoming(inMessage){
 
                 //LOAD NEW PAGE
                 //SCENE VARIABLE SWITCH
-                newRound();
+                
+                
+                //MOVE TO NEW PAGE
+                goToResultsScreen();
+                //newRound();
 
             } 
         }else {
