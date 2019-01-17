@@ -28,7 +28,7 @@ var thisPlayersIndex = null;
 
 //BOOLEAN TO ENSURE ONLY ANSWER PER PLAYER
 var alreadyAnswered = 0;
-var allPlayersSorted = [{}];
+
 
 var allPlayers = [];
 var allQuestions = [
@@ -189,14 +189,10 @@ function goToResultsScreen(correctOrIncorrect){
     
     //image(img,0,0,0,0);
     
-    allPlayersSorted.sort(function(a,b) {
-        
-        return a.score -b.score
-    });
-    
-    allPlayersSorted.reverse();
     
     
+    
+    setTimeout(newRound,3000);
     
 }
 
@@ -220,7 +216,7 @@ function readIncoming(inMessage){
 
                 //IF IT IS THEN ADD ONE TO THAT PLAYERS SCORE
                 allPlayers[inMessage.message.playerIndex].score += 1;
-                allPlayersSorted[inMessage.message.playerIndex].score += 1;
+                
                 
                 correctOrIncorrect = true;
                 
@@ -241,14 +237,9 @@ function readIncoming(inMessage){
                 
                 
                 //MOVE TO NEW PAGE
-                //goToResultsScreen(correctOrIncorrect);
+                goToResultsScreen(correctOrIncorrect);
                 
-    
-                allPlayersSorted.reverse();
-    
-                
-                
-                newRound();
+                //newRound();
 
             } 
         }else {
@@ -281,12 +272,8 @@ function readIncoming(inMessage){
                 name: inMessage.message.playerName,
                 score:0
             });
-            //ADD THIS PLAYER TO THE COPY FOR SORTING LATER
-            allPlayersSorted.push({
-                playerIndex: allPlayers.length,
-                name: inMessage.message.playerName,
-                score:0
-            });
+            
+            
             
             
             
@@ -341,9 +328,7 @@ function requestJoinGame (){
 //CALLED BY ___ ONCE A NEW QUESTION IS POSED
 function newRound(){
     
-    allPlayersSorted.sort(function(a,b) {
-        return a.score -b.score
-    });
+    
     
     console.log("New Round");
     
