@@ -150,13 +150,10 @@ function setupAnswerButtons(){
     answerDBtn.mousePressed(chooseOptionD);
 }
 
-function draw() {
-   
-}
 
 function readIncoming(inMessage){
     
-    console.log("GOT MESSAGE ON CHANNEL" + inMessage.channel);
+    
     
     if (inMessage.channel == channelName){
         
@@ -190,9 +187,11 @@ function readIncoming(inMessage){
                 //SCENE VARIABLE SWITCH
                 newRound();
 
-            } else {
+            } 
+        }else {
+            
                 alert("You have not joined a game yet!");
-            }
+            
         }
     //IF A MESSAGE IS RECIEVED FROM THE SETUP CHANNEL
     //RECIEVED ANYTIME SOMEONE WANTS TO JOIN A GAME
@@ -237,7 +236,7 @@ function readIncoming(inMessage){
                     //IF THIS PLAYER WAS THE LAST ONE TO JOIN, THEN WE ARE READY TO PLAY
                     if (allPlayers.length == numberOfPlayers){
                         
-                        console.log("Everyone is ready, lets play!");
+                        alert("Everyone is ready, lets play!");
                     }
             
                 }
@@ -284,7 +283,14 @@ function newRound(){
     currentRoundNumber++;
     //PICK A RANDOM QUESTION INDEX
     //currentQuestionIndex = int(random(0,allQuestions.length));
-    currentQuestionIndex++;
+    if (currentQuestionIndex == allQuestions.length-1){
+        
+        currentQuestionIndex = 0;
+        
+    } else {
+       
+        currentQuestionIndex++;
+    }
     //REFRESH THE ANSWER BUTTONS TO DISPLAY THE NEW INFORMATION
     setupAnswerButtons();
 }
