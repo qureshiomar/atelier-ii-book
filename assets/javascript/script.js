@@ -176,11 +176,23 @@ function goToResultsScreen(correctOrIncorrect){
         createP("Correct!");
         //OMAR STYLING HERE
         
+        //var img = loadImage("assets/checkmarkicon.jpg");
+        
     } else {
         
         createP("Wrong!");
         //OMAR STYLING HERE
+        
+        //var img = loadImage("assets/crossicon.jpg");
     }
+    
+    //image(img,0,0,0,0);
+    var allScores = [];
+    
+    allPlayers.sort(function(a,b){
+        
+        return a.score -b.score
+    });
     
     
 }
