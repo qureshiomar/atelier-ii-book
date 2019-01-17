@@ -21,7 +21,7 @@ for (var i; i < 10; i ++){
 
 */
 var currentRoundNumber = 0;
-var numberOfPlayers = 3;
+var numberOfPlayers = 1;
 var currentQuestionIndex = 0;
 var numberOfRecievedAnswers = 0;
 var thisPlayersIndex = null;
@@ -80,15 +80,22 @@ var subKey = 'sub-c-8789e4ac-135a-11e9-b4a6-026d6924b094';
 var channelName = "kahoot";
 var setupChannelName = "kahootSetup"
 
-//GRAPHIC ELEMENTS
+//GRAPHIC ELEMENTS//GRAPHIC ELEMENTS
+//LOBBY SCENE
+var nameInput, joinBtn;
+
+//QUESTION SCENE
 var answerABtn, answerBBtn, answerCBtn , answerDBtn;
 var questionLabel;
-var nameInput, joinBtn;
+
+//POST-QUESTION SCENE
+var rightOrWrongLabel, checkOrCrossImg, topPlayerNameLabel, secondPlayerNameLabel, thirdPlayerNameLabel, topPlayerScoreLabel, secondPlayerScoreLabel, thirdPlayerScoreLabel;
 
 function setup() 
 {
 
   
+    
   background(255);
   
    // initialize pubnub
@@ -147,12 +154,13 @@ function setupAnswerButtons(){
     answerDBtn.style('width', "300px");
     answerDBtn.style('height', "300px");
     
+    
+    
     answerABtn.mousePressed(chooseOptionA);
     answerBBtn.mousePressed(chooseOptionB);
     answerCBtn.mousePressed(chooseOptionC);
     answerDBtn.mousePressed(chooseOptionD);
 }
-
 
 function goToResultsScreen(correctOrIncorrect){
     
@@ -175,14 +183,14 @@ function goToResultsScreen(correctOrIncorrect){
     //IF THEY GOT IT RIGHT SHOW CORRECT
     if (correctOrIncorrect){
         
-        createP("Correct!");
+//        createP("Correct!");
         //OMAR STYLING HERE
         
         //var img = loadImage("assets/checkmarkicon.jpg");
         
     } else {
         
-        createP("Wrong!");
+//        createP("Wrong!");
         //OMAR STYLING HERE
         
         //var img = loadImage("assets/crossicon.jpg");
@@ -190,37 +198,9 @@ function goToResultsScreen(correctOrIncorrect){
     
     //image(img,0,0,0,0);
     
-    var test = [
-        {
-            playerIndex: 0,
-            name: "Fred",
-            score:0
-        },
-        {
-            playerIndex: 1,
-            name: "Tom",
-            score:18
-        },
-        {
-            playerIndex: 2,
-            name: "Syndy",
-            score:25
-        },
-        {
-            playerIndex: 3,
-            name: "Paul",
-            score:12
-        }
-    ];
-    
-    var blank = {
-            playerIndex: 0,
-            name: "blank",
-            score:0
-    }
-   topPlayer = blank;
-    secondPlayer = blank;
-   thirdPlayer = blank;
+    topPlayer = {score:0};
+    secondPlayer = {score:0};
+    thirdPlayer = {score:0};
     
     //FIND TOP PLAYER
     for (var i =0; i < allPlayers.length; i++){
@@ -255,10 +235,19 @@ function goToResultsScreen(correctOrIncorrect){
          
     }
     
-   
-   console.log(topPlayer); 
-     console.log(secondPlayer);
-     console.log(thirdPlayer);
+    //Show top label
+    rightOrWrongLabel = createP();
+    
+    //Show top image(Should be beside label)
+    checkOrCrossImg = image();
+    
+    //Show the top three players name and score
+    createP(topPlayer.name);
+    createP(Number(topPlayer.score));
+    createP(secondPlayer.name);
+    createP(Number(secondPlayer.score));
+    createP(thirdPlayer.name);
+    createP(Number(thirdPlayer.score));
     
     setTimeout(newRound,3000);
     
@@ -270,7 +259,7 @@ function readIncoming(inMessage){
     
     if (inMessage.channel == channelName){
         
-        //ONLY EXCEPT ANSWERS FROM REGISTARED PLAYERS
+        //ONLY EXCEPT ANSWERS FROM REGISTERED PLAYERS
         if (inMessage.message.playerIndex != null){
             
             //ADD TO THE NUMBER OF ANSWERS
@@ -310,14 +299,19 @@ function readIncoming(inMessage){
                 //newRound();
 
             } 
+            
+            
         }else {
             
                 alert("You have not joined a game yet!");
             
         }
+    
     //IF A MESSAGE IS RECIEVED FROM THE SETUP CHANNEL
     //RECIEVED ANYTIME SOMEONE WANTS TO JOIN A GAME
     } else if (inMessage.channel == setupChannelName) {
+        
+        
         
         //FIRST WE HAVE TO MAKE SURE THEY HAVE NOT ALREADY JOINED
         var alreadyAdded = false;
@@ -358,15 +352,15 @@ function readIncoming(inMessage){
                         thisPlayersIndex = allPlayers[i].playerIndex;
                     }
                     
-                    //IF THIS PLAYER WAS THE LAST ONE TO JOIN, THEN WE ARE READY TO PLAY
+                }
+                
+            }
+            
+             //IF THIS PLAYER WAS THE LAST ONE TO JOIN, THEN WE ARE READY TO PLAY
                     if (allPlayers.length == numberOfPlayers){
                         
                         alert("Everyone is ready, lets play!");
                     }
-            
-                }
-                
-            }
             
         } else {
             
@@ -395,8 +389,6 @@ function requestJoinGame (){
 
 //CALLED BY ___ ONCE A NEW QUESTION IS POSED
 function newRound(){
-    
-    
     
     console.log("New Round");
     
