@@ -21,7 +21,7 @@ for (var i; i < 10; i ++){
 
 */
 var currentRoundNumber = 0;
-var numberOfPlayers = 1;
+var numberOfPlayers = 3;
 var currentQuestionIndex = 0;
 var numberOfRecievedAnswers = 0;
 var thisPlayersIndex = null;
@@ -198,17 +198,17 @@ function goToResultsScreen(correctOrIncorrect){
         {
             playerIndex: 1,
             name: "Tom",
-            score:15
+            score:18
         },
         {
             playerIndex: 2,
             name: "Syndy",
-            score:16
+            score:25
         },
         {
             playerIndex: 3,
             name: "Paul",
-            score:2
+            score:12
         }
     ];
     
@@ -222,21 +222,21 @@ function goToResultsScreen(correctOrIncorrect){
     var thirdPlayer = blank;
     
     //FIND TOP PLAYER
-    for (var i =0; i < test.length; i++){
+    for (var i =0; i < allPlayers.length; i++){
         
-        if (test[i].score > topPlayer.score){
+        if (allPlayers[i].score > topPlayer.score){
             console.log("set 1 place");
-           topPlayer = test[i];
+           topPlayer = allPlayers[i];
         }
     }
     
     //FIND SECOND PLAYER
-    for (var j =0; j < test.length; j++){
+    for (var j =0; j < allPlayers.length; j++){
         
-        if (test[j].score > secondPlayer.score && test[j] != topPlayer){
+        if (allPlayers[j].score > secondPlayer.score && allPlayers[j] != topPlayer){
             
             console.log("Setting 2");
-            secondPlayer = test[j];
+            secondPlayer = allPlayers[j];
             
         }
          
@@ -244,12 +244,12 @@ function goToResultsScreen(correctOrIncorrect){
     }
     
     //FIND THIRD PLAYER
-     for (var k =0; k < test.length; k++){
+     for (var k =0; k < allPlayers.length; k++){
        
-        if (test[k].score > thirdPlayer.score && test[k] != topPlayer && test[k] != secondPlayer){
+        if (allPlayers[k].score > thirdPlayer.score && allPlayers[k] != topPlayer && allPlayers[k] != secondPlayer){
             
             console.log("Setting 3");
-           thirdPlayer = test[k];
+           thirdPlayer = allPlayers[k];
         }
          
     }
