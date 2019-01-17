@@ -25,6 +25,7 @@ var numberOfPlayers = 3;
 var currentQuestionIndex = 0;
 var numberOfRecievedAnswers = 0;
 var thisPlayersIndex = null;
+var topPlayer, secondPlayer, thirdPlayer;
 
 //BOOLEAN TO ENSURE ONLY ANSWER PER PLAYER
 var alreadyAnswered = 0;
@@ -217,9 +218,9 @@ function goToResultsScreen(correctOrIncorrect){
             name: "blank",
             score:0
     }
-    var topPlayer = blank;
-    var secondPlayer = blank;
-    var thirdPlayer = blank;
+   topPlayer = blank;
+    secondPlayer = blank;
+   thirdPlayer = blank;
     
     //FIND TOP PLAYER
     for (var i =0; i < allPlayers.length; i++){
@@ -233,7 +234,7 @@ function goToResultsScreen(correctOrIncorrect){
     //FIND SECOND PLAYER
     for (var j =0; j < allPlayers.length; j++){
         
-        if (allPlayers[j].score > secondPlayer.score && allPlayers[j] != topPlayer){
+        if (allPlayers[j].score >= secondPlayer.score && allPlayers[j] != topPlayer){
             
             console.log("Setting 2");
             secondPlayer = allPlayers[j];
@@ -246,7 +247,7 @@ function goToResultsScreen(correctOrIncorrect){
     //FIND THIRD PLAYER
      for (var k =0; k < allPlayers.length; k++){
        
-        if (allPlayers[k].score > thirdPlayer.score && allPlayers[k] != topPlayer && allPlayers[k] != secondPlayer){
+        if (allPlayers[k].score >= thirdPlayer.score && allPlayers[k] != topPlayer && allPlayers[k] != secondPlayer){
             
             console.log("Setting 3");
            thirdPlayer = allPlayers[k];
