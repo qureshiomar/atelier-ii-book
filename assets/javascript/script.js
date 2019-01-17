@@ -151,8 +151,11 @@ function setupAnswerButtons(){
     answerDBtn.mousePressed(chooseOptionD);
 }
 
-function goToResultsScreen(){
+
+function goToResultsScreen(correctOrIncorrect){
     
+    //REMOVE EXSISTING ELEMENTS//REMOVE EXSISTING ELEMENTS
+    //REMOVE EXSISTING ELEMENTS//REMOVE EXSISTING ELEMENTS
     
     answerABtn.remove();
     answerBBtn.remove();
@@ -164,12 +167,27 @@ function goToResultsScreen(){
     questionLabel.remove();
     
     
+    //ADD NEW ELEMENTS | ADD NEW ELEMENTS | ADD NEW ELEMENTS
+    //ADD NEW ELEMENTS | ADD NEW ELEMENTS | ADD NEW ELEMENTS
+    
+    //IF THEY GOT IT RIGHT SHOW CORRECT
+    if (correctOrIncorrect){
+        
+        createP("Correct!");
+        //OMAR STYLING HERE
+        
+    } else {
+        
+        createP("Wrong!");
+        //OMAR STYLING HERE
+    }
+    
     
 }
 
 function readIncoming(inMessage){
     
-    
+    var correctOrIncorrect;
     
     if (inMessage.channel == channelName){
         
@@ -187,11 +205,14 @@ function readIncoming(inMessage){
 
                 //IF IT IS THEN ADD ONE TO THAT PLAYERS SCORE
                 allPlayers[inMessage.message.playerIndex].score += 1;
-
+                
+                correctOrIncorrect = true;
+                
                 console.log(allPlayers[inMessage.message.playerIndex].name + " guessed correctly!");
 
             } else {
-
+                
+                correctOrIncorrect = false;
                 console.log(allPlayers[inMessage.message.playerIndex].name + " guessed wrong!");
             }
 
@@ -204,7 +225,7 @@ function readIncoming(inMessage){
                 
                 
                 //MOVE TO NEW PAGE
-                goToResultsScreen();
+                goToResultsScreen(correctOrIncorrect);
                 //newRound();
 
             } 
