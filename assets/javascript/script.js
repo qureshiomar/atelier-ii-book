@@ -193,17 +193,17 @@ function goToResultsScreen(correctOrIncorrect){
         {
             playerIndex: 0,
             name: "Fred",
-            score:5
+            score:0
         },
         {
             playerIndex: 1,
             name: "Tom",
-            score:10
+            score:15
         },
         {
             playerIndex: 2,
             name: "Syndy",
-            score:3
+            score:16
         },
         {
             playerIndex: 3,
@@ -212,14 +212,20 @@ function goToResultsScreen(correctOrIncorrect){
         }
     ];
     
-    var topPlayer = test[0];
-    var secondPlayer = test[0];
-    var thirdPlayer = test[0];
+    var blank = {
+            playerIndex: 0,
+            name: "blank",
+            score:0
+    }
+    var topPlayer = blank;
+    var secondPlayer = blank;
+    var thirdPlayer = blank;
     
     //FIND TOP PLAYER
     for (var i =0; i < test.length; i++){
         
         if (test[i].score > topPlayer.score){
+            console.log("set 1 place");
            topPlayer = test[i];
         }
     }
@@ -229,7 +235,9 @@ function goToResultsScreen(correctOrIncorrect){
         
         if (test[j].score > secondPlayer.score && test[j] != topPlayer){
             
-           secondPlayer = test[j];
+            console.log("Setting 2");
+            secondPlayer = test[j];
+            
         }
          
          
@@ -239,7 +247,8 @@ function goToResultsScreen(correctOrIncorrect){
      for (var k =0; k < test.length; k++){
        
         if (test[k].score > thirdPlayer.score && test[k] != topPlayer && test[k] != secondPlayer){
-             
+            
+            console.log("Setting 3");
            thirdPlayer = test[k];
         }
          
