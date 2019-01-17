@@ -28,6 +28,7 @@ var thisPlayersIndex = null;
 
 //BOOLEAN TO ENSURE ONLY ANSWER PER PLAYER
 var alreadyAnswered = 0;
+var allScores = [{}];
 
 var allPlayers = [];
 var allQuestions = [
@@ -187,13 +188,16 @@ function goToResultsScreen(correctOrIncorrect){
     }
     
     //image(img,0,0,0,0);
-    var allScores = [];
+    var allScores = allPlayers;
     
-    allPlayers.sort(function(a,b){
+    allScores.sort(function(a,b) {
         
         return a.score -b.score
     });
     
+    allScores.reverse();
+    
+    console.log(allScores);
     
 }
 
@@ -271,6 +275,13 @@ function readIncoming(inMessage){
                 name: inMessage.message.playerName,
                 score:0
             });
+            
+            allScores.push({
+                playerIndex: allPlayers.length,
+                name: inMessage.message.playerName,
+                score:0
+            });
+            
             
             
             
