@@ -28,7 +28,7 @@ var thisPlayersIndex = null;
 
 //BOOLEAN TO ENSURE ONLY ANSWER PER PLAYER
 var alreadyAnswered = 0;
-var allScores = [{}];
+var allPlayersSorted = [{}];
 
 var allPlayers = [];
 var allQuestions = [
@@ -188,16 +188,15 @@ function goToResultsScreen(correctOrIncorrect){
     }
     
     //image(img,0,0,0,0);
-    var allScores = allPlayers;
     
-    allScores.sort(function(a,b) {
+    allPlayersSorted.sort(function(a,b) {
         
         return a.score -b.score
     });
     
-    allScores.reverse();
+    allPlayersSorted.reverse();
     
-    console.log(allScores);
+    
     
 }
 
@@ -221,6 +220,7 @@ function readIncoming(inMessage){
 
                 //IF IT IS THEN ADD ONE TO THAT PLAYERS SCORE
                 allPlayers[inMessage.message.playerIndex].score += 1;
+                allPlayersSorted[inMessage.message.playerIndex].score += 1;
                 
                 correctOrIncorrect = true;
                 
@@ -241,8 +241,14 @@ function readIncoming(inMessage){
                 
                 
                 //MOVE TO NEW PAGE
-                goToResultsScreen(correctOrIncorrect);
-                //newRound();
+                //goToResultsScreen(correctOrIncorrect);
+                
+    
+                allPlayersSorted.reverse();
+    
+                
+                
+                newRound();
 
             } 
         }else {
@@ -275,8 +281,8 @@ function readIncoming(inMessage){
                 name: inMessage.message.playerName,
                 score:0
             });
-            
-            allScores.push({
+            //ADD THIS PLAYER TO THE COPY FOR SORTING LATER
+            allPlayersSorted.push({
                 playerIndex: allPlayers.length,
                 name: inMessage.message.playerName,
                 score:0
@@ -334,6 +340,10 @@ function requestJoinGame (){
 
 //CALLED BY ___ ONCE A NEW QUESTION IS POSED
 function newRound(){
+    
+    allPlayersSorted.sort(function(a,b) {
+        return a.score -b.score
+    });
     
     console.log("New Round");
     
