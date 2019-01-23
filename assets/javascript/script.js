@@ -34,39 +34,96 @@ var alreadyAnswered = 0;
 var allPlayers = [];
 var allQuestions = [
     
-    {
-        question: "What is Jerry's name?",
-        answerA: "Joe",
-        answerB: "Jerry",
-        answerC: "Will",
-        answerD: "Lily",
+  {
+        question: "From 1966-1978 classical music was banned in what country",
+        answerA: "Indosnesia",
+        answerB: "China",
+        answerC: "USA",
+        answerD: "England",
         correctAnswer: "B"
     },
     {
-        question: "What time is Noon?",
-        answerA: "1:30pm",
-        answerB: "4:00pm",
-        answerC: "12:00pm",
-        answerD: "Infinity!",
+        
+        //play The Overture to Don Giovanni
+        question: "Mozart wrote this song after suffering from?",
+        answerA: "Influenza",
+        answerB: "Depression",
+        answerC: "A Hangover",
+        answerD: "Starvation",
         correctAnswer: "C"
     },
     {
-        question: "What class is this for?",
-        answerA: "Atelier2",
-        answerB: "English",
-        answerC: "Gym",
-        answerD: "Art",
-        correctAnswer: "A"
+        question: "How many single peices of Wood are needed to make a violin?",
+        answerA: "2",
+        answerB: "1000",
+        answerC: "70",
+        answerD: "0",
+        correctAnswer: "D"
     },
     {
-        question: "Who is our proff?",
-        answerA: "Gregory S.B",
-        answerB: "Samuel J",
-        answerC: "Alfred H.",
-        answerD: "Nick P",
+        question: "Warner Communcations paid how much for the legal use of 'Happy Birthday'?",
+        answerA: "1.50$",
+        answerB: "28$",
+        answerC: "75,000",
+        answerD: "28 Million",
         correctAnswer: "D"
-    }
-
+    },
+    
+    {
+        question: "What key do most tilets flush in'?",
+        answerA: "E Minor",
+        answerB: "E flat",
+        answerC: "what",
+        answerD: "D major",
+        correctAnswer: "B"
+    },
+    
+        {
+        question: "Mozart began composing at what age'?",
+        answerA: "5",
+        answerB: "16",
+        answerC: "39",
+        answerD: "13",
+        correctAnswer: "A"
+    },
+    
+           {
+        question: "The early version of the Trombone was called'?",
+        answerA: "Trombune",
+        answerB: "Sackbut",
+        answerC: "Iron Horn",
+        answerD: "Trombest",
+        correctAnswer: "B"
+    },
+    
+           {
+        question: "What is the french word for a bad note from a reed instrument'?",
+        answerA: "Couac",
+        answerB: "Blah",
+        answerC: "Bruyont",
+        answerD: "Mete",
+        correctAnswer: "A"
+    },
+    
+           {
+        question: "Why did Bach go to jail'?",
+        answerA: "Looting",
+        answerB: "Murder",
+        answerC: "Quitting his Job",
+        answerD: "Playing Piano",
+        correctAnswer: "C"
+    },
+    
+           {
+        question: "The japanese word 'Karaoke' comes from the phrase meaning?",
+        answerA: "Sing Vibration",
+        answerB: "Encore",
+        answerC: "Empty Orchestra",
+        answerD: "Solo Sound",
+        correctAnswer: "C"
+    },
+    
+    
 
 ];
 
@@ -113,6 +170,8 @@ function setup()
     nameInput = createInput();
     joinBtn = createButton("Join");
     joinBtn.mousePressed(requestJoinGame);
+       joinBtn.class("joinBtn");
+    nameInput.class("nameInput");
     
     setupAnswerButtons();
     
@@ -136,16 +195,20 @@ function setupAnswerButtons(){
     answerABtn = createButton('A ' + allQuestions[currentQuestionIndex].answerA);
     answerABtn.style('width', "300px");
     answerABtn.style('height', "300px");
+     answerABtn.class("buttona");
     
     answerBBtn = createButton('B ' + allQuestions[currentQuestionIndex].answerB);
     answerBBtn.style('width', "300px");
     answerBBtn.style('height', "300px");
+     answerBBtn.class("buttonb");
     answerCBtn = createButton('C ' + allQuestions[currentQuestionIndex].answerC);
     answerCBtn.style('width', "300px");
     answerCBtn.style('height', "300px");
+    answerCBtn.class("buttonc");
     answerDBtn = createButton('D ' + allQuestions[currentQuestionIndex].answerD);
     answerDBtn.style('width', "300px");
     answerDBtn.style('height', "300px");
+    answerDBtn.class("buttond");
     
     answerABtn.mousePressed(chooseOptionA);
     answerBBtn.mousePressed(chooseOptionB);
